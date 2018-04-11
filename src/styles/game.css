@@ -84,16 +84,3 @@ h1 {
   margin-bottom: 1rem; 
   text-align: center;
 }
-
-svg {
-  background: #353535;
-}
-
-.paddle, .ball {
-  fill: white;
-}
-
-.middle-line {
-  stroke-dasharray: 5;
-  stroke: white;
-}
