@@ -1,4 +1,4 @@
-import { SVG_NS } from "../settings.js";
+import { SVG_NS, KEYS, PADDLE } from "../settings.js";
 import Board from './Board';
 import Paddle from './Paddle';
 import Ball from './Ball';
@@ -14,17 +14,28 @@ export default class Game {
 		this.gameElement = document.getElementById(this.element);
 		this.board = new Board(this.width, this.height);
 
-		// paddle parameters
-		this.paddleWidth = 8;
-		this.paddleHeight = 56;
-		this.boardGap = 10;
-
 		// create players
-		this.player1 = new Paddle(this.height, this.paddleWidth, this.paddleHeight, this.boardGap, ((this.height - this.paddleHeight) / 2));
-		this.player2 = new Paddle(this.height, this.paddleWidth, this.paddleHeight, (this.width - this.paddleWidth - this.boardGap), ((this.height - this.paddleHeight) / 2));
+		this.player1 = new Paddle(
+			this.height,
+			PADDLE.paddleWidth,
+			PADDLE.paddleHeight,
+			PADDLE.boardGap,
+			((this.height - PADDLE.paddleHeight) / 2),
+			KEYS.p1up,
+			KEYS.p1down,
+		);
+		this.player2 = new Paddle(
+			this.height,
+			PADDLE.paddleWidth,
+			PADDLE.paddleHeight,
+			(this.width - PADDLE.paddleWidth - PADDLE.boardGap),
+			((this.height - PADDLE.paddleHeight) / 2),
+			KEYS.p2up,
+			KEYS.p2down,
+		);
 
 		// create a ball
-		this.ball = new Ball(256, 128, 8);
+		this.ball = new Ball(8, this.width, this.height);
 	}
 
 	render() {
