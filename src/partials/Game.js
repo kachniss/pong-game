@@ -4,11 +4,16 @@ import Paddle from './Paddle';
 import Ball from './Ball';
 
 export default class Game {
-
 	constructor(element, width, height) {
 		this.element = element;
 		this.width = width;
 		this.height = height;
+		this.pause = false;
+        document.addEventListener("keydown", event => {
+            if (event.key === KEYS.spaceBar) {
+                this.pause = !this.pause;
+            }
+        });
 
 		// create board
 		this.gameElement = document.getElementById(this.element);
@@ -52,6 +57,10 @@ export default class Game {
 		this.board.render(svg);
 		this.player1.render(svg);
 		this.player2.render(svg);
-		this.ball.render(svg);
+		// if(!this.pause) {
+			this.ball.render(svg);
+		// }
+		
+		
 	}
 }
