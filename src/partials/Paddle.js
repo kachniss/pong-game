@@ -1,4 +1,4 @@
-import { SVG_NS, PADDLE, KEYS } from "../settings.js";
+import { SVG_NS, PADDLE } from "../settings.js";
 
 export default class Paddle {
     constructor(boardHeight, width, height, x, y, up, down) {
@@ -9,12 +9,6 @@ export default class Paddle {
         this.y = y;
         this.speed = PADDLE.speed;
         this.score = PADDLE.score;
-        this.pause = false;
-        document.addEventListener("keydown", event => {
-            if (event.key === KEYS.spaceBar) {
-                this.pause = !this.pause;
-            }
-        });
 
         document.addEventListener("keydown", event => {
             switch (event.key) {
@@ -48,7 +42,11 @@ export default class Paddle {
         let topY = this.y;
         let bottomY = this.y + this.height;
         return [leftX, rightX, topY, bottomY];
-      }
+    }
+
+    incrementScore() {
+        this.score++;
+    }
 
     render(svg) {
         // create a paddle

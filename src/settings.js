@@ -5,13 +5,18 @@ export const KEYS = {
     p1down: "z",            // player 1 down key
     p2up: "ArrowUp",        // player 2 up key
     p2down: "ArrowDown",    // player 2 down key
-    spaceBar: " ",          // we'll use this later...
+    pause: " ",          // we'll use this later...
   }
 
 export const PADDLE = {
   paddleWidth: 8,
   paddleHeight: 56,
 	boardGap: 10,
-  speed: 10,
+  speed: 15,
   score: 0,
+}
+
+export const SCORE = {
+  scoreSize: 30,
+  scoreY: 30,
 }

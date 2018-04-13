@@ -1,4 +1,4 @@
-import { SVG_NS, KEYS } from "../settings.js";
+import { SVG_NS } from "../settings.js";
 
 export default class Ball {
     constructor(radius, boardWidth, boardHeight) {
@@ -6,14 +6,8 @@ export default class Ball {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         this.direction = 1;
+        this.ping = new Audio("public/sounds/pong-01.wav");
         this.reset();
-        this.pause = false;
-        // console.log(pause);
-        document.addEventListener("keydown", event => {
-            if (event.key === KEYS.spaceBar) {
-                this.pause = !this.pause;
-            }
-        });
     }
 
     reset() {
@@ -32,7 +26,7 @@ export default class Ball {
         this.y += this.vy;
     }
 
-    wallCollision() {
+    wallCollision(player1, player2) {
         // top and bottom wall bounce
         if ((this.y - this.radius) <= 0 || (this.y + this.radius) >= this.boardHeight) {
             this.vy = this.vy * -1;
@@ -40,13 +34,16 @@ export default class Ball {
 
         // left ball bounce
         if (this.x - this.radius <= 0) {
-            this.goal(2);
+            this.direction = 1;
+            this.reset();
+            player2.incrementScore();
         }
 
         // right ball bounce
         if (this.x + this.radius >= this.boardWidth) {
-            this.goal(1);
-            
+            this.direction = -1;
+            this.reset();
+            player1.incrementScore();
         }
     }
 
@@ -56,23 +53,16 @@ export default class Ball {
             let [leftX, rightX, topY, bottomY] = player2.coordinates();
             if((this.x + this.radius >= leftX) && (this.x + this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
                 this.vx = this.vx * -1;
+                this.ping.play();
             }
         } else {
             // check for player 1 collision
             let [leftX, rightX, topY, bottomY] = player1.coordinates();
             if((this.x - this.radius >= leftX) && (this.x - this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
                 this.vx = this.vx * -1;
+                this.ping.play();
             }
         }
-    }
-
-    goal(player) {
-        if (player === 1) {
-            this.direction = -1;
-        } else {
-            this.direction = 1;
-        }
-        this.reset();
     }
  
     render(svg, player1, player2) {
@@ -87,10 +77,8 @@ export default class Ball {
         svg.appendChild(ball);
 
         // move the ball if the game is not paused
-        if(!this.pause) {
-            this.move();
-            this.wallCollision();
-            this.paddleCollision(player1, player2);
-        } 
+        this.move();
+        this.wallCollision(player1, player2);
+        this.paddleCollision(player1, player2);
     }
   }
