@@ -40,20 +40,42 @@ export default class Ball {
 
         // left ball bounce
         if (this.x - this.radius <= 0) {
-            this.direction = 1;
-            console.log("Player 2 scores");
-            this.reset();
+            this.goal(2);
         }
 
         // right ball bounce
         if (this.x + this.radius >= this.boardWidth) {
-            this.direction = -1;
-            console.log("Player 1 scores");
-            this.reset();
+            this.goal(1);
+            
         }
     }
 
-    render(svg) {
+    paddleCollision(player1, player2) {
+        if(this.vx > 0) {
+            // check for player 2 collision
+            let [leftX, rightX, topY, bottomY] = player2.coordinates();
+            if((this.x + this.radius >= leftX) && (this.x + this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
+                this.vx = this.vx * -1;
+            }
+        } else {
+            // check for player 1 collision
+            let [leftX, rightX, topY, bottomY] = player1.coordinates();
+            if((this.x - this.radius >= leftX) && (this.x - this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
+                this.vx = this.vx * -1;
+            }
+        }
+    }
+
+    goal(player) {
+        if (player === 1) {
+            this.direction = -1;
+        } else {
+            this.direction = 1;
+        }
+        this.reset();
+    }
+ 
+    render(svg, player1, player2) {
         // create a ball
         const ball = document.createElementNS(SVG_NS, "circle");
         ball.setAttributeNS(null, "cx", this.x);
@@ -68,6 +90,7 @@ export default class Ball {
         if(!this.pause) {
             this.move();
             this.wallCollision();
+            this.paddleCollision(player1, player2);
         } 
     }
   }
