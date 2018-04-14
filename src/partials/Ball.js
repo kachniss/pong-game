@@ -67,6 +67,7 @@ export default class Ball {
             if((this.x + this.radius >= leftX) && (this.x + this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
                 this.vx = this.vx * -1;
                 this.color = 'red';
+                player2.changeColor('red');
                 this.ping.play();
             }
         } else {
@@ -75,6 +76,7 @@ export default class Ball {
             if((this.x - this.radius >= leftX) && (this.x - this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
                 this.vx = this.vx * -1;
                 this.color = 'green';
+                player1.changeColor('green');
                 this.ping.play();
             }
         }

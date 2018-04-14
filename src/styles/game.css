@@ -102,3 +102,7 @@ h1 {
   color: white;
   visibility: hidden;
 }
+
+.info {
+  margin-top: 120px;
+}

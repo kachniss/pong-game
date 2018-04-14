@@ -11,17 +11,7 @@ export default class Paddle {
         this.score = PADDLE.score;
         this.upButton = up;
         this.downButton = down; 
-
-        // document.addEventListener('keydown', event => {
-        //     switch (event.key) {
-        //       case up:
-        //         this.up();
-        //         break;
-        //       case down:
-        //         this.down();
-        //         break;
-        //     }
-        // });
+        this.color = 'white';
     }
 
     // move up function
@@ -48,6 +38,11 @@ export default class Paddle {
         this.speed += this.score/4;
     }
 
+    changeColor(color) {
+        this.color = color;
+        setTimeout(() => { this.color = 'white'; }, 200);
+    }
+
     render(svg, keyPressed) {
         // create a paddle
         const paddle = document.createElementNS(SVG_NS, 'rect');
@@ -55,7 +50,7 @@ export default class Paddle {
         paddle.setAttributeNS(null, 'height', this.height);
         paddle.setAttributeNS(null, 'x', this.x);
         paddle.setAttributeNS(null, 'y', this.y);
-        paddle.setAttributeNS(null, 'fill', 'white');
+        paddle.setAttributeNS(null, 'fill', this.color);
 
         // append to svg
         svg.appendChild(paddle);

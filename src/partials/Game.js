@@ -11,6 +11,8 @@ export default class Game {
 		this.width = width;
 		this.height = height;
 		this.pause = false;
+
+		// multiple key pressed
 		this.keyPressed = {};
         document.addEventListener('keydown', (event) => {
             this.keyPressed[event.key] = true;
@@ -57,9 +59,11 @@ export default class Game {
 		this.score1 = new Score((this.width/2 - 50), SCORE.scoreY, SCORE.scoreSize);
 		this.score2 = new Score((this.width/2 + 25), SCORE.scoreY, SCORE.scoreSize);
 
+		// create text field for winner
 		this.text = new Text(this.width/2 - 120, this.height/2 - 20, SCORE.scoreSize);
 	}
 
+	// reset game
 	reset(player) {
 		player.score = 0;
 		player.y = ((this.height - PADDLE.paddleHeight) / 2);
@@ -73,17 +77,15 @@ export default class Game {
 		}
 		
 		if(this.pause) {
-			if(this.player1.score === 0 || this.player2.score === 0) {
-				document.getElementById("pause").style.visibility  = "hidden";
+			if (this.ball.x === this.width/2 && this.ball.y === this.height/2 && this.ball2.x === this.width/2 && this.ball2.y === this.height/2) {
+				document.getElementById('pause').style.visibility = 'hidden';
 			} else {
-				document.getElementById("pause").style.visibility  = "visible";
+				document.getElementById('pause').style.visibility = 'visible';
 			}
 			return;
 		} else {
-			console.log("unpaused");
-			document.getElementById("pause").style.visibility  = "hidden";
+			document.getElementById('pause').style.visibility = 'hidden';
 		}
-		
 
 		this.gameElement.innerHTML = '';
 
@@ -102,8 +104,6 @@ export default class Game {
 		this.ball2.render(svg, this.player1, this.player2);
 		this.score1.render(svg, this.player1);
 		this.score2.render(svg, this.player2);
-
-		
 
 		if(this.player1.score === 10) {
 			this.text.winner(svg, 1);

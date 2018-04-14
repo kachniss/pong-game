@@ -8,12 +8,18 @@ export default class Text {
     }
     
     winner(svg, playerNo) {
+
+      if (playerNo === 1) {
+        this.color = 'green';
+      } else {
+        this.color = 'red';
+      }
         // create winner field
         const winner = document.createElementNS(SVG_NS, 'text');
         winner.textContent = `Player ${playerNo} wins!`;
         winner.setAttributeNS(null, 'x', this.x);
         winner.setAttributeNS(null, 'y', this.y);
-        winner.setAttributeNS(null, 'fill', 'white');
+        winner.setAttributeNS(null, 'fill', this.color);
         winner.setAttributeNS(null, 'font-family', 'Silkscreen Web');
         winner.setAttributeNS(null, 'font-size', this.size);
 
@@ -29,20 +35,5 @@ export default class Text {
         // append to svg
         svg.appendChild(winner);
         svg.appendChild(restart);
-    }
-
-    pause(svg) {
-      // create pause field
-      const pause = document.createElementNS(SVG_NS, 'text');
-      pause.textContent = 'Paused';
-      pause.setAttributeNS(null, 'x', this.x);
-      pause.setAttributeNS(null, 'y', this.y);
-      pause.setAttributeNS(null, 'fill', 'white');
-      pause.setAttributeNS(null, 'font-family', 'Silkscreen Web');
-      pause.setAttributeNS(null, 'font-size', this.size);
-
-      // append to svg
-      svg.appendChild(pause);
-
     }
   }
