@@ -79,8 +79,26 @@ body {
   width: 100%;
 }
 
+.game-wrapper {
+  position: absolute;
+}
+
 h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem; 
   text-align: center;
+}
+
+.players {
+  display: flex;
+  justify-content: space-between;
+}
+
+#pause {
+  display: block;
+  font-size: 40px;
+  text-align: center;
+  margin-top: -150px;
+  color: white;
+  visibility: hidden;
 }

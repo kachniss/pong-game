@@ -1,12 +1,12 @@
-import { SVG_NS } from "../settings.js";
+import { SVG_NS } from '../settings.js';
 
 export default class Ball {
-    constructor(radius, boardWidth, boardHeight) {
-        this.radius = radius;
+    constructor(boardWidth, boardHeight) {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         this.direction = 1;
-        this.ping = new Audio("public/sounds/pong-01.wav");
+        this.color = 'white';
+        this.ping = new Audio('public/sounds/pong-01.wav');
         this.reset();
     }
 
@@ -14,10 +14,23 @@ export default class Ball {
         // default ball position and speed vector
         this.x = this.boardWidth / 2;
         this.y = this.boardHeight / 2;
+        this.vx = 0;
+        this.vy = 0;
+        this.color = 'white';
+
+        // random radius, speed, speed vector
+        do {
+            this.radius = Math.floor(Math.random() * 4 + 4);
+        } while(!this.radius);
+        do {
+            this.speed = Math.floor(Math.random() * 3);
+        } while(!this.speed)
+
         do {
             this.vy = Math.floor(Math.random() * 10 - 5);
-        } while(this.vy === 0)
-        this.vx = this.direction * (6 - Math.abs(this.vy));
+        } while(!this.vy)
+        this.vx = this.direction * (6 - Math.abs(this.vy)) * this.speed;
+        this.vy = this.vy * this.speed;
     }
 
     move() {
@@ -53,6 +66,7 @@ export default class Ball {
             let [leftX, rightX, topY, bottomY] = player2.coordinates();
             if((this.x + this.radius >= leftX) && (this.x + this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
                 this.vx = this.vx * -1;
+                this.color = 'red';
                 this.ping.play();
             }
         } else {
@@ -60,6 +74,7 @@ export default class Ball {
             let [leftX, rightX, topY, bottomY] = player1.coordinates();
             if((this.x - this.radius >= leftX) && (this.x - this.radius <= rightX) && (this.y >= topY && this.y <= bottomY)) {
                 this.vx = this.vx * -1;
+                this.color = 'green';
                 this.ping.play();
             }
         }
@@ -67,11 +82,11 @@ export default class Ball {
  
     render(svg, player1, player2) {
         // create a ball
-        const ball = document.createElementNS(SVG_NS, "circle");
-        ball.setAttributeNS(null, "cx", this.x);
-        ball.setAttributeNS(null, "cy", this.y);
-        ball.setAttributeNS(null, "r", this.radius);
-        ball.setAttributeNS(null, "fill", "white");
+        const ball = document.createElementNS(SVG_NS, 'circle');
+        ball.setAttributeNS(null, 'cx', this.x);
+        ball.setAttributeNS(null, 'cy', this.y);
+        ball.setAttributeNS(null, 'r', this.radius);
+        ball.setAttributeNS(null, 'fill', this.color);
 
         // append to svg
         svg.appendChild(ball);
