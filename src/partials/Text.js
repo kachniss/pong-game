@@ -9,6 +9,7 @@ export default class Text {
     
     winner(svg, playerNo) {
 
+      // winner's text color
       if (playerNo === 1) {
         this.color = 'green';
       } else {

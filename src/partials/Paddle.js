@@ -24,6 +24,7 @@ export default class Paddle {
         this.y = Math.min(this.y + this.speed, this.boardHeight - this.height);
     }
     
+    // get coordinates of the paddle for paddle collision
     coordinates() {
         let leftX = this.x;
         let rightX = this.x + this.width;
@@ -32,12 +33,14 @@ export default class Paddle {
         return [leftX, rightX, topY, bottomY];
     }
 
+    // goal score
     incrementScore() {
         this.score++;
         this.height -= this.score/2;
-        this.speed += this.score/4;
+        this.speed += this.score/5;
     }
 
+    // change paddle color on ball touch
     changeColor(color) {
         this.color = color;
         setTimeout(() => { this.color = 'white'; }, 200);

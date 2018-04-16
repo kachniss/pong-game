@@ -23,7 +23,7 @@ export default class Ball {
             this.radius = Math.floor(Math.random() * 4 + 4);
         } while(!this.radius);
         do {
-            this.speed = Math.floor(Math.random() * 3);
+            this.speed = Math.floor(Math.random() * 2);
         } while(!this.speed)
 
         do {
