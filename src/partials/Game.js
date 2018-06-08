@@ -14,18 +14,18 @@ export default class Game {
 
 		// multiple key pressed
 		this.keyPressed = {};
-        document.addEventListener('keydown', (event) => {
-            this.keyPressed[event.key] = true;
-         }, false);
-         document.addEventListener('keyup', (event) => {
-            this.keyPressed[event.key] = false;
-         }, false);
+		document.addEventListener('keydown', (event) => {
+			this.keyPressed[event.key] = true;
+		}, false);
+		document.addEventListener('keyup', (event) => {
+			this.keyPressed[event.key] = false;
+		}, false);
 
-        document.addEventListener('keydown', event => {
-            if (event.key === KEYS.pause) {
-                this.pause = !this.pause;
-            }
-        });
+		document.addEventListener('keydown', event => {
+			if (event.key === KEYS.pause) {
+				this.pause = !this.pause;
+			}
+		});
 
 		// create board
 		this.gameElement = document.getElementById(this.element);
@@ -68,6 +68,7 @@ export default class Game {
 		player.score = 0;
 		player.y = ((this.height - PADDLE.paddleHeight) / 2);
 		player.height = PADDLE.paddleHeight;
+		player.speed = PADDLE.speed;
 	}
 
 	render() {

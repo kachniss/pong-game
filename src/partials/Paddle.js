@@ -59,11 +59,11 @@ export default class Paddle {
         svg.appendChild(paddle);
 
         if (keyPressed[this.upButton]) {
-			this.up();
-		}
+            this.up();
+        }
         
         if (keyPressed[this.downButton]) {
-			this.down();
-		}
+        this.down();
+        }
     }
-  }
+}
